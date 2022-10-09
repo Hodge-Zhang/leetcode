@@ -37,12 +37,37 @@ package main
 // 👍 273 👎 0
 
 //leetcode submit region begin(Prohibit modification and deletion)
-var (
-	wordsMap map[string]bool
-)
-
 func FindAllConcatenatedWordsInADict(words []string) []string {
-	initWords(words)
+	// init map
+	wordsMap := make(map[string]bool, len(words))
+	for _, word := range words {
+		wordsMap[word] = true
+	}
+
+	var dfs func(string, int, int) int
+	dfs = func(s string, cnt int, pos int) int {
+		if pos == len(s) {
+			return cnt
+		}
+
+		// 快速结束
+		//if cnt > 0 && wordsMap[s[pos:]] {
+		//	return cnt + 1
+		//}
+
+		for i := pos + 1; i <= len(s); i++ {
+			word := s[pos:i]
+			if !wordsMap[word] {
+				continue
+			}
+			cnt1 := dfs(s, cnt+1, i)
+			if cnt1 > 1 {
+				return cnt1
+			}
+		}
+
+		return 0
+	}
 
 	var catWords []string
 	for _, word := range words {
@@ -51,37 +76,6 @@ func FindAllConcatenatedWordsInADict(words []string) []string {
 		}
 	}
 	return catWords
-}
-
-func initWords(words []string) {
-	wordsMap = make(map[string]bool, len(words))
-	for _, word := range words {
-		wordsMap[word] = true
-	}
-}
-
-func dfs(s string, cnt int, pos int) int {
-	if pos == len(s) {
-		return cnt
-	}
-
-	// 快速结束
-	//if cnt > 0 && wordsMap[s[pos:]] {
-	//	return cnt + 1
-	//}
-
-	for i := pos + 1; i <= len(s); i++ {
-		word := s[pos:i]
-		if !wordsMap[word] {
-			continue
-		}
-		cnt1 := dfs(s, cnt+1, i)
-		if cnt1 > 1 {
-			return cnt1
-		}
-	}
-
-	return 0
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
