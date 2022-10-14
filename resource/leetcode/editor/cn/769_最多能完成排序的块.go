@@ -64,7 +64,6 @@ func MaxChunksToSorted(arr []int) int {
 		s++
 	}
 	return s
-
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
