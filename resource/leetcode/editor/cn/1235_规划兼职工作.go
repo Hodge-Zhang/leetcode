@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"sort"
+)
+
 //你打算利用空闲时间来做兼职工作赚些零花钱。 
 //
 // 这里有 n 份兼职工作，每份工作预计从 startTime[i] 开始到 endTime[i] 结束，报酬为 profit[i]。 
@@ -55,9 +60,51 @@ package main
 // Related Topics 数组 二分查找 动态规划 排序 
 // 👍 193 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
-func jobScheduling(startTime []int, endTime []int, profit []int) int {
+func JobScheduling(startTime []int, endTime []int, profit []int) int {
+	// 动态规划 dp[i]=max(dp[i-1], dp[j]+ profit[j]) 如果时间i有结束的工作
+	size := len(startTime)
+	jobs := make([][3]int, size)
+	for i := 0; i < size; i++ {
+		jobs[i] = [3]int{startTime[i], endTime[i], profit[i]}
+	}
+	var timePoint []int
+	timePoint = append(timePoint, startTime...)
+	timePoint = append(timePoint, endTime...)
+	sort.Ints(timePoint)
 
+	timeMap := make(map[int]int, size*2)
+	for i, v := range timePoint {
+		timeMap[v] = i
+	}
+
+	sort.Slice(jobs, func(i, j int) bool {
+		return jobs[i][1] < jobs[j][1]
+	})
+
+	fmt.Println(jobs)
+
+	dp := make([]int, size*2) // dp[i] 对应的时间为timePoint[i]
+	//dp[0]=0
+	idx := 0
+	for i := 1; i < size*2; i++ {
+		if idx >= size || timePoint[i] != jobs[idx][1] { // end time
+			dp[i] = dp[i-1]
+			continue
+		}
+		for idx < size && timePoint[i] == jobs[idx][1] { // 可能存在多个end time相同的job
+			dpi:=timeMap[jobs[idx][0]]
+			if dp[i] < dp[dpi]+jobs[idx][2] {
+				dp[i] = dp[dpi] + jobs[idx][2]
+			}
+			if dp[i] < dp[i-1] {
+				dp[i] = dp[i-1]
+			}
+			idx++
+		}
+	}
+	fmt.Println(dp)
+	return dp[2*size-1]
 }
+
 //leetcode submit region end(Prohibit modification and deletion)

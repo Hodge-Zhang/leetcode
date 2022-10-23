@@ -68,9 +68,9 @@ type Bank struct {
 	size    int
 }
 
-func Constructor(balance []int64) Bank {
-	return Bank{balance: balance, size: len(balance)}
-}
+//func Constructor(balance []int64) Bank {
+//	return Bank{balance: balance, size: len(balance)}
+//}
 
 func (this *Bank) Transfer(account1 int, account2 int, money int64) bool {
 	if !this.checkAccount(account1) || !this.checkAccount(account2) {

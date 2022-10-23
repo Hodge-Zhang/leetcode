@@ -51,9 +51,19 @@ package main
 // Related Topics 双指针 字符串 
 // 👍 28 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
-func mergeAlternately(word1 string, word2 string) string {
+func MergeAlternately(word1 string, word2 string) string {
+	var s string
+	for i := 0; i < len(word1) || i < len(word2); i++ {
+		if i < len(word1) {
+			s += string(word1[i])
+		}
+		if i < len(word2) {
+			s += string(word2[i])
+		}
+	}
 
+	return s
 }
+
 //leetcode submit region end(Prohibit modification and deletion)

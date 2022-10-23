@@ -49,13 +49,13 @@ type StockSpanner struct {
 	day    int //每个price的位置
 }
 
-func Constructor() StockSpanner {
-	return StockSpanner{
-		prices: nil,
-		top:    0,
-		day:    0,
-	}
-}
+//func Constructor() StockSpanner {
+//	return StockSpanner{
+//		prices: nil,
+//		top:    0,
+//		day:    0,
+//	}
+//}
 
 func (this *StockSpanner) Next(price int) int {
 	for i := this.top - 1; i >= 0 && this.prices[i][1] <= price; i-- {
