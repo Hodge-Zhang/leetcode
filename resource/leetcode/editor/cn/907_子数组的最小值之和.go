@@ -38,23 +38,26 @@ package main
 //leetcode submit region begin(Prohibit modification and deletion)
 func SumSubarrayMins(arr []int) int {
 	dp := make([]int, len(arr))
-	sum := 0
+	sums := make([]int, len(arr))
 	for i := 0; i < len(arr); i++ {
 		for j := 0; j+i < len(arr); j++ {
 			if i == 0 {
-				dp[j] = arr[j]
+				dp[j] = j
 			} else {
-				if dp[j] > arr[j+i] {
-					dp[j] = arr[j+i]
+				if arr[dp[j]] > arr[j+i] {
+					dp[j] = j + i
 				}
+
 			}
 
-			sum += dp[j]
-			sum %= 1e9 + 7
-
+			sums[dp[j]]++
 		}
 	}
-	return sum
+	total := 0
+	for i, sum := range sums {
+		total += arr[i] * sum
+	}
+	return total % (1e9 + 7)
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
