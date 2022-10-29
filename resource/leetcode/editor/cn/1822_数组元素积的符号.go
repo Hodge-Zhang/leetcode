@@ -49,9 +49,18 @@ package main
 // Related Topics 数组 数学 
 // 👍 79 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
-func arraySign(nums []int) int {
-
+func ArraySign(nums []int) int {
+	r := 1
+	for _, num := range nums {
+		if num == 0 {
+			return 0
+		}
+		if num < 0 {
+			r = -r
+		}
+	}
+	return r
 }
+
 //leetcode submit region end(Prohibit modification and deletion)

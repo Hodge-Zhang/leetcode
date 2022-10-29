@@ -47,9 +47,22 @@ package main
 // Related Topics 数组 字符串 
 // 👍 72 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
-func countMatches(items [][]string, ruleKey string, ruleValue string) int {
-
+func CountMatches(items [][]string, ruleKey string, ruleValue string) int {
+	cnt := 0
+	idx := 0
+	if ruleKey == "color" {
+		idx = 1
+	}
+	if ruleKey == "name" {
+		idx = 2
+	}
+	for _, item := range items {
+		if item[idx] == ruleValue {
+			cnt++
+		}
+	}
+	return cnt
 }
+
 //leetcode submit region end(Prohibit modification and deletion)
