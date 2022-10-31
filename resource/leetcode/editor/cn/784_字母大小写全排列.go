@@ -1,6 +1,6 @@
 package main
 
-//给定一个字符串 s ，通过将字符串 s 中的每个字母转变大小写，我们可以获得一个新的字符串。 
+//给定一个字符串 s ，通过将字符串 s 中的每个字母转变大小写，我们可以获得一个新的字符串。
 //
 // 返回 所有可能得到的字符串集合 。以 任意顺序 返回输出。 
 //
@@ -31,9 +31,32 @@ package main
 // Related Topics 位运算 字符串 回溯 
 // 👍 435 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
-func letterCasePermutation(s string) []string {
+func LetterCasePermutation(s string) []string {
+	var ans []string
+	var backtrace func(string)
+	diff := 'a' - 'A'
+	backtrace = func(path string) {
+		if len(path) == len(s) {
+			ans = append(ans, path)
+			return
+		}
+		c := s[len(path)]
+		path += string(c)
+		backtrace(path)
+		path = path[:len(path)-1]
+		if c >= 'A' && c <= 'Z' {
+			path += string(int32(c) + diff)
+			backtrace(path)
+		}
 
+		if c >= 'a' && c <= 'z' {
+			path += string(int32(c) - diff)
+			backtrace(path)
+		}
+	}
+	backtrace("")
+	return ans
 }
+
 //leetcode submit region end(Prohibit modification and deletion)

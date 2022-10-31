@@ -1,6 +1,6 @@
 package main
 
-//神奇字符串 s 仅由 '1' 和 '2' 组成，并需要遵守下面的规则： 
+//神奇字符串 s 仅由 '1' 和 '2' 组成，并需要遵守下面的规则：
 //
 // 
 // 神奇字符串 s 的神奇之处在于，串联字符串中 '1' 和 '2' 的连续出现次数可以生成该字符串。 
@@ -39,9 +39,39 @@ package main
 // Related Topics 双指针 字符串 
 // 👍 161 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
-func magicalString(n int) int {
+func MagicalString(n int) int {
+	var chars []int
+	chars = append(chars, 1, 2,2)
+	l, r := 2, 3
+	cnt := 1
+	for r < n {
+		if chars[l] == 1 {
+			if chars[r-1] == 1 {
+				chars = append(chars, 2)
+			} else {
+				chars = append(chars, 1)
+				cnt += 1
+			}
+			r += 1
+		} else {
+			if chars[r-1] == 1 {
+				chars = append(chars, 2, 2)
+			} else {
+				chars = append(chars, 1, 1)
+				cnt += 2
+			}
+			r += 2
+		}
+		l++
+	}
 
+	// r+2可能大于n
+	if r == n+1 && chars[n] == 1 {
+		cnt--
+	}
+
+	return cnt
 }
+
 //leetcode submit region end(Prohibit modification and deletion)
